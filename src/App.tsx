@@ -37,16 +37,7 @@ function App() {
 
         {(state.value === 'FETCH' || state.value === 'TIMESERIES') && (
           <>
-            <button
-              onClick={() =>
-                send({
-                  type: 'CMD-LIMIT',
-                  limit: 40,
-                })
-              }
-            >
-              CMD-LIMIT
-            </button>
+            {/* -- FILTER --- */}
             <button
               onClick={() =>
                 send({
@@ -57,6 +48,43 @@ function App() {
             >
               CMD-FILTER
             </button>
+            {/* -- FILTER-OUT --- */}
+            <button
+              onClick={() =>
+                send({
+                  type: 'CMD-FILTER-OUT',
+                  field: 'myField',
+                })
+              }
+            >
+              CMD-FILTER-OUT
+            </button>
+            {/* -- LIMIT --- */}
+            <button
+              onClick={() =>
+                send({
+                  type: 'CMD-LIMIT',
+                  limit: 40,
+                })
+              }
+            >
+              CMD-LIMIT
+            </button>
+            {/* -- SORT --- */}
+            <button
+              onClick={() =>
+                send({
+                  type: 'CMD-SORT',
+                  fields: [
+                    { name: 'field1', direction: 'asc' },
+                    { name: 'field2', direction: 'desc' },
+                  ],
+                })
+              }
+            >
+              CMD-SORT
+            </button>
+            {/* -- BUILD --- */}
             <button
               onClick={() =>
                 send({
