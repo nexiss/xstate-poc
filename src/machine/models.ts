@@ -1,3 +1,5 @@
+import { SortDirection } from './commands/ordering-commands';
+
 export type Operator = '==' | '!=';
 export type Expression = string;
 export type Alias = string;
@@ -28,7 +30,7 @@ export type Commands =
   | { id: 'CMD-LIMIT'; limit: number }
   | {
       id: 'CMD-SORT';
-      fields: { name: string; direction: 'asc' | 'desc' | undefined }[];
+      fields: { name: string; direction: SortDirection | undefined }[];
     }
   | { id: 'CMD-EXPAND' }
   | { id: 'CMD-FIELDS-FLATTEN' }

@@ -103,7 +103,6 @@ export const machine = createMachine(
         on: { FETCH: 'FETCH', TIMESERIES: 'TIMESERIES' },
       },
       FETCH: {
-        // entry actions
         entry: assign(({ event }) => ({
           sentence: 'fetch ' + event.sourceId,
           commands: [FETCH_COMMAND],
@@ -125,42 +124,44 @@ export const machine = createMachine(
   },
   {
     actions: {
-      'CMD-FILTER': assign(({ event, context }) =>
+      'CMD-FILTER': assign(({ context, event }) =>
         filterAssign(context, 'by{' + event.field + '}')
       ),
-      'CMD-FILTER-OUT': assign(({ event, context }) =>
+      'CMD-FILTER-OUT': assign(({ context, event }) =>
         filterOutAssign(context, 'by{' + event.field + '}')
       ),
-      'CMD-FIELDS': assign(({ event, context }) =>
+      'CMD-FIELDS': assign(({ context, event }) =>
         fieldsAssign(context, event.fields)
       ),
-      'CMD-FIELDSADD': assign(({ event, context }) =>
+      'CMD-FIELDSADD': assign(({ context, event }) =>
         fieldsAddAssign(context, {
           alias: event.alias,
           expression: event.expression,
         })
       ),
-      'CMD-FIELDS-KEEP': assign(({ event, context }) =>
+      'CMD-FIELDS-KEEP': assign(({ context, event }) =>
         fieldsKeepAssign(context, event.fields)
       ),
-      'CMD-FIELDS-REMOVE': assign(({ event, context }) =>
+      'CMD-FIELDS-REMOVE': assign(({ context, event }) =>
         fieldsRemoveAssign(context, event.fields)
       ),
-      'CMD-FIELDS-RENAME': assign(({ event, context }) =>
+      'CMD-FIELDS-RENAME': assign(({ context, event }) =>
         fieldsRenameAssign(context, event.fields)
       ),
-      'CMD-FIELDS-PARSE': assign(({ event, context }) =>
+      'CMD-FIELDS-PARSE': assign(({ context, event }) =>
         parseAssign(context, event.field, event.pattern)
       ),
-      'CMD-LIMIT': assign(({ event, context }) =>
+      'CMD-LIMIT': assign(({ context, event }) =>
         limitAssign(context, event.limit)
       ),
-      'CMD-SORT': assign(({ event, context }) =>
+      'CMD-SORT': assign(({ context, event }) =>
         sortAssign(context, event.fields)
       ),
-      'CMD-EXPAND': assign(({ context }) => expandAssign(context)),
-      'CMD-FIELDS-FLATTEN': assign(({ context }) =>
-        fieldsFlattenAssign(context)
+      'CMD-EXPAND': assign(({ context, event }) =>
+        expandAssign(context, event.limit)
+      ),
+      'CMD-FIELDS-FLATTEN': assign(({ context, event }) =>
+        fieldsFlattenAssign(context, event.prefix)
       ),
       'CMD-FIELDS-SUMMARY': assign(({ context }) =>
         fieldsSummaryAssign(context)

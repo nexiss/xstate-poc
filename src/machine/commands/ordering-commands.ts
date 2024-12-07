@@ -9,15 +9,17 @@ export const limitAssign = (
   commands: [...commands, { id: 'CMD-LIMIT' as const, limit: limitValue }],
 });
 
+export type SortDirection = 'asc' | 'desc';
+
 const sort = (
-  fields: { name: string; direction: 'asc' | 'desc' | undefined }[]
+  fields: { name: string; direction: SortDirection | undefined }[]
 ) =>
   `sort ${fields
     .map((field) => `${field.name} ${field.direction ?? ''}`.trimEnd())
     .join(', ')}`;
 export const sortAssign = (
   { sentence, commands }: Context,
-  fields: { name: string; direction: 'asc' | 'desc' | undefined }[]
+  fields: { name: string; direction: SortDirection | undefined }[]
 ) => ({
   sentence: sentence + PIPE_CHAR + sort(fields),
   commands: [...commands, { id: 'CMD-SORT' as const, fields }],
